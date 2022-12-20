@@ -1,0 +1,74 @@
+type Transfer @jsonField {
+  extrinsicHash: String
+  amount: String!
+  to: String!
+  from: String!
+  fee: String!
+  block: String!
+  extrinsicId: String
+  success: Boolean!
+}
+
+type Reward @jsonField {
+  amount: String!
+  isReward: Boolean!,
+  era: Int,
+  validator: String
+}
+
+type Extrinsic @jsonField {
+  hash: String!
+  module: String!
+  call: String!
+  fee: String!
+  success: Boolean!
+}
+
+type HistoryElement @entity {
+  id: ID!
+  timestamp: String!
+  address: String!
+  reward: Reward
+  extrinsic: Extrinsic
+  transfer: Transfer
+}
+
+type EraValidatorInfo @entity {
+  id: ID!
+  address: String!
+  era: Int!
+  total: String!
+  own: String!
+  others: [IndividualExposure]!
+}
+
+type IndividualExposure @jsonField {
+  who: String!
+  value: String!
+}
+
+#enum StakeChangeType {
+#  bonded
+#  unbonded
+#  slashed
+#  rewarded
+#}
+
+type StakeChange @entity {
+  id: ID!
+  timestamp: String!
+  address: String!
+  amount: String!
+  accumulatedAmount: String!
+  type: String!
+}
+
+type AccumulatedStake @entity {
+  id: ID!
+  amount: String!
+}
+
+type ErrorEvent @entity {
+  id: ID!
+  description: String!
+}
